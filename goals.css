@@ -1,0 +1,285 @@
+/* ---- GOALS GRID ---- */
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 24px 32px;
+}
+
+/* ---- GOAL CARD ---- */
+.goal-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-top: 4px solid #FF8C42;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.goal-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.goal-card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1A1A2E;
+  margin-bottom: 4px;
+}
+
+.goal-card-deadline {
+  font-size: 12px;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+.goal-card-menu {
+  background: none;
+  border: none;
+  color: #9CA3AF;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.goal-card-menu:hover {
+  color: #EF4444;
+}
+
+/* ---- GOAL AMOUNTS ---- */
+.goal-amounts {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.goal-saved {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1A1A2E;
+}
+
+.goal-target {
+  font-size: 13px;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+/* ---- GOAL PROGRESS ---- */
+.goal-progress-bg {
+  width: 100%;
+  height: 10px;
+  background: #FFE4CC;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.goal-progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.5s ease;
+}
+
+.goal-progress-pct {
+  font-size: 12px;
+  color: #6B7280;
+  font-weight: 700;
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* ---- GOAL MONTHLY SUGGESTION ---- */
+.goal-monthly {
+  font-size: 12px;
+  color: #6B7280;
+  background: #FFFAF7;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+}
+
+.goal-monthly span {
+  color: #FF8C42;
+  font-weight: 800;
+}
+
+/* ---- GOAL ACTIONS ---- */
+.goal-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.goal-contribute-btn {
+  flex: 1;
+  padding: 10px;
+  background: #FF8C42;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  font-size: 13px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.goal-contribute-btn:hover {
+  background: #e67a32;
+}
+
+.goal-delete-btn {
+  padding: 10px 16px;
+  background: #F3F4F6;
+  color: #6B7280;
+  border: none;
+  border-radius: 100px;
+  font-size: 13px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.goal-delete-btn:hover {
+  background: #FEF2F2;
+  color: #EF4444;
+}
+
+/* ---- COMPLETED GOAL ---- */
+.goal-card.completed {
+  border-top-color: #22C55E;
+  opacity: 0.85;
+}
+
+.goal-completed-badge {
+  display: inline-block;
+  background: #22C55E;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 100px;
+  margin-top: 2px;
+}
+
+/* ---- EMPTY STATE ---- */
+.goals-empty {
+  display: none;
+  text-align: center;
+  padding: 80px 0;
+}
+
+.goals-empty p {
+  font-size: 16px;
+  font-weight: 700;
+  color: #6B7280;
+}
+
+.goals-empty .empty-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: #9CA3AF;
+  margin-top: 6px;
+}
+
+/* ---- SAVINGS SUGGESTION ---- */
+.savings-suggestion {
+  background: #F0FDF4;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #1A1A2E;
+  font-weight: 600;
+  border-left: 3px solid #22C55E;
+  display: none;
+  line-height: 1.5;
+}
+
+/* ---- SUMMARY STRIP ---- */
+.summary-strip {
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  height: 56px;
+  background: #FFF0E6;
+  border-bottom: 1px solid #F0E8E4;
+}
+
+.strip-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 24px;
+}
+
+.strip-item:first-child { padding-left: 0; }
+
+.strip-label {
+  font-size: 13px;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+.strip-value {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1A1A2E;
+}
+
+.strip-divider {
+  width: 1px;
+  height: 24px;
+  background: #F0E8E4;
+}
+
+@media (max-width: 768px) {
+  .summary-strip {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 12px 16px !important;
+    height: auto !important;
+  }
+
+  .strip-item {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    padding: 8px 10px !important;
+    background: white !important;
+    border-radius: 8px !important;
+  }
+
+  .strip-label {
+    font-size: 11px !important;
+  }
+
+  .strip-value {
+    font-size: 15px !important;
+  }
+
+  .strip-divider {
+    display: none !important;
+  }
+
+  .topbar {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    height: 56px !important;
+    padding: 0 16px !important;
+  }
+
+  .topbar h3 {
+    font-size: 16px !important;
+  }
+
+  .add-btn {
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+    white-space: nowrap !important;
+  }
+}

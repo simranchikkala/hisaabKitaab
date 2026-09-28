@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hisaabKitaab — Setup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="setup.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+  </head>
+  <body class="setup-body">
+
+    <div class="setup-container">
+
+      <!-- SCREEN 0 — WELCOME -->
+      <div class="setup-screen" id="screen0">
+        <div class="welcome-content">
+          <div class="logo-mark">hK</div>
+          <h1 class="welcome-title">Take control of your money.<br>Finally.</h1>
+          <p class="welcome-sub">hisaabKitaab helps students and young professionals track spending, hit savings goals, and build better money habits — in minutes a day.</p>
+          <button class="setup-btn" onclick="goToScreen(1)">Get Started — It's Free</button>
+          <p class="welcome-note">No credit card needed · Takes 2 minutes</p>
+        </div>
+      </div>
+
+      <!-- SCREEN 1 — GOAL SELECTION -->
+      <div class="setup-screen hidden" id="screen1">
+        <div class="step-indicator">
+          <div class="step-indicator-fill" style="width: 25%"></div>
+        </div>
+        <p class="step-label">Step 1 of 4</p>
+        <h1>What brings you here?</h1>
+        <p class="setup-subtitle">We'll personalise your dashboard based on this. You can change it later.</p>
+
+        <div class="goal-grid" id="goalGrid">
+          <div class="goal-card" onclick="selectGoal(this, 'understand')">
+            <p class="goal-title">Understand my spending</p>
+            <p class="goal-desc">I want to see where my money is actually going</p>
+          </div>
+          <div class="goal-card" onclick="selectGoal(this, 'reduce')">
+            <p class="goal-title">Cut unnecessary expenses</p>
+            <p class="goal-desc">Help me identify and reduce wasteful spending</p>
+          </div>
+          <div class="goal-card" onclick="selectGoal(this, 'save')">
+            <p class="goal-title">Save for a goal</p>
+            <p class="goal-desc">I'm working towards something specific</p>
+          </div>
+          <div class="goal-card" onclick="selectGoal(this, 'all')">
+            <p class="goal-title">All of the above</p>
+            <p class="goal-desc">I want full visibility and control over my finances</p>
+          </div>
+        </div>
+
+        <button class="setup-btn" onclick="goToScreen(2)">Continue</button>
+      </div>
+
+      <!-- SCREEN 2 — INCOME & BUDGET -->
+      <div class="setup-screen hidden" id="screen2">
+        <div class="step-indicator">
+          <div class="step-indicator-fill" style="width: 50%"></div>
+        </div>
+        <p class="step-label">Step 2 of 4</p>
+        <h1>Let's set your monthly budget</h1>
+        <p class="setup-subtitle">Don't worry about being exact — you can always adjust this later.</p>
+
+        <div class="setup-field">
+          <label>Your Name</label>
+          <input type="text" id="userName" placeholder="e.g. Rishi">
+        </div>
+
+        <div class="setup-field">
+          <label>Monthly Income (₹)</label>
+          <input type="number" id="userIncome" placeholder="e.g. 15,000">
+          <span class="field-hint">Salary, pocket money, freelance — whatever comes in</span>
+        </div>
+
+        <div class="setup-field">
+          <label>Monthly Spending Limit (₹)</label>
+          <input type="number" id="userBudget" placeholder="e.g. 12,000">
+          <span class="field-hint">How much are you okay spending per month?</span>
+        </div>
+
+        <div class="tip-card" id="tipCard" style="display:none">
+          <p class="tip-title">50-30-20 Rule</p>
+          <p class="tip-text">Based on your income: <strong id="needs">—</strong> on needs · <strong id="wants">—</strong> on wants · <strong id="savings">—</strong> to save</p>
+        </div>
+
+        <div class="setup-nav">
+          <button class="back-btn" onclick="goToScreen(1)">Back</button>
+          <button class="setup-btn" onclick="goToScreen(3)">Continue</button>
+        </div>
+      </div>
+
+      <!-- SCREEN 3 — CATEGORY SETUP -->
+      <div class="setup-screen hidden" id="screen3">
+        <div class="step-indicator">
+          <div class="step-indicator-fill" style="width: 75%"></div>
+        </div>
+        <p class="step-label">Step 3 of 4</p>
+        <h1>What do you usually spend on?</h1>
+        <p class="setup-subtitle">Select your categories and set a monthly budget for each.</p>
+
+        <div class="category-grid" id="categoryGrid"></div>
+
+        <div class="add-category-row">
+          <input type="text" id="newCatName" placeholder="Add your own category...">
+          <div class="color-picker" id="colorPicker">
+            <div class="color-dot selected-color" style="background:#FF8C42" onclick="selectColor(this, '#FF8C42')"></div>
+            <div class="color-dot" style="background:#22C55E" onclick="selectColor(this, '#22C55E')"></div>
+            <div class="color-dot" style="background:#3B82F6" onclick="selectColor(this, '#3B82F6')"></div>
+            <div class="color-dot" style="background:#A78BFA" onclick="selectColor(this, '#A78BFA')"></div>
+            <div class="color-dot" style="background:#F43F5E" onclick="selectColor(this, '#F43F5E')"></div>
+            <div class="color-dot" style="background:#F59E0B" onclick="selectColor(this, '#F59E0B')"></div>
+          </div>
+          <button class="add-cat-btn" onclick="addCustomCategory()">+ Add</button>
+        </div>
+
+        <div class="setup-nav">
+          <button class="back-btn" onclick="goToScreen(2)">Back</button>
+          <button class="setup-btn" onclick="goToScreen(4)">Continue</button>
+        </div>
+      </div>
+
+      <!-- SCREEN 4 — SAVINGS GOAL -->
+      <div class="setup-screen hidden" id="screen4">
+        <div class="step-indicator">
+          <div class="step-indicator-fill" style="width: 100%"></div>
+        </div>
+        <p class="step-label">Step 4 of 4</p>
+        <h1>Got a savings goal in mind?</h1>
+        <p class="setup-subtitle">Having a goal makes saving 3x more likely. You can skip this for now.</p>
+
+        <div class="setup-field">
+          <label>What are you saving for?</label>
+          <input type="text" id="goalName" placeholder="e.g. New laptop, Trip to Goa">
+        </div>
+
+        <div class="setup-field">
+          <label>Target Amount (₹)</label>
+          <input type="number" id="goalAmount" placeholder="e.g. 40,000">
+        </div>
+
+        <div class="setup-field">
+          <label>Target Month</label>
+          <select id="goalMonth">
+            <option value="">Select month</option>
+            <option value="2026-05">May 2026</option>
+            <option value="2026-06">June 2026</option>
+            <option value="2026-07">July 2026</option>
+            <option value="2026-08">August 2026</option>
+            <option value="2026-09">September 2026</option>
+            <option value="2026-10">October 2026</option>
+            <option value="2026-11">November 2026</option>
+            <option value="2026-12">December 2026</option>
+            <option value="2027-01">January 2027</option>
+            <option value="2027-02">February 2027</option>
+            <option value="2027-03">March 2027</option>
+            <option value="2027-04">April 2027</option>
+            <option value="2027-05">May 2027</option>
+            <option value="2027-06">June 2027</option>
+            <option value="2027-07">July 2027</option>
+            <option value="2027-08">August 2027</option>
+            <option value="2027-09">September 2027</option>
+            <option value="2027-10">October 2027</option>
+            <option value="2027-11">November 2027</option>
+            <option value="2027-12">December 2027</option>
+            <option value="2028-06">June 2028</option>
+            <option value="2028-12">December 2028</option>
+          </select>
+        </div>
+
+        <div class="savings-suggestion" id="savingsSuggestion"></div>
+
+        <div class="setup-nav">
+          <button class="back-btn" onclick="goToScreen(3)">Back</button>
+          <button class="setup-btn" onclick="finishSetup()">Finish Setup</button>
+        </div>
+        <p class="skip-link" onclick="finishSetup()">Skip savings goal for now</p>
+      </div>
+
+      <!-- SCREEN 5 — ALL SET -->
+      <div class="setup-screen hidden" id="screen5">
+        <div class="allset-content">
+          <div class="allset-icon">✓</div>
+          <h1 id="allsetTitle">You're ready!</h1>
+          <p class="setup-subtitle">Your dashboard is personalised. Start by logging your first expense or just explore.</p>
+          <button class="setup-btn" onclick="window.location.href='index.html'">Take me to my Dashboard</button>
+          <button class="secondary-btn" onclick="window.location.href='index.html'">Log my first expense</button>
+          <p class="welcome-note">Your data stays on your device. Private by default.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="setup.js"></script>
+  </body>
+</html>

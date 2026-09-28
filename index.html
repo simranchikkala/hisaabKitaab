@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hisaabKitaab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+  </head>
+  <body>
+
+    <div class="sidebar">
+      <h2>hisaabKitaab</h2>
+      <p id="sidebarWelcome">Welcome</p>
+      <a href="index.html" class="active">Dashboard</a>
+      <a href="transactions.html">Transactions</a>
+      <a href="analytics.html">Analytics</a>
+      <a href="goals.html">Goals</a>
+      <a href="savings.html">Savings</a>
+      <a href="settings.html" class="settings-link">Settings</a>
+      <button class="signout-btn" onclick="signOut()">Sign Out</button>
+    </div>
+
+    <div class="main">
+
+      <div class="topbar">
+        <h3 id="greeting">Good morning</h3>
+        <div class="topbar-right">
+
+          <div class="month-selector">
+            <button class="month-btn" onclick="changeMonth(-1)">&#8249;</button>
+            <div class="month-display" id="monthDisplay" onclick="toggleMonthDropdown()">
+              April 2026
+              <div class="month-dropdown" id="monthDropdown">
+                <div class="month-option" onclick="selectMonth(0)">January</div>
+                <div class="month-option" onclick="selectMonth(1)">February</div>
+                <div class="month-option" onclick="selectMonth(2)">March</div>
+                <div class="month-option active-month" onclick="selectMonth(3)">April</div>
+                <div class="month-option" onclick="selectMonth(4)">May</div>
+                <div class="month-option" onclick="selectMonth(5)">June</div>
+                <div class="month-option" onclick="selectMonth(6)">July</div>
+                <div class="month-option" onclick="selectMonth(7)">August</div>
+                <div class="month-option" onclick="selectMonth(8)">September</div>
+                <div class="month-option" onclick="selectMonth(9)">October</div>
+                <div class="month-option" onclick="selectMonth(10)">November</div>
+                <div class="month-option" onclick="selectMonth(11)">December</div>
+              </div>
+            </div>
+            <div class="year-display" id="yearDisplay" onclick="toggleYearDropdown(event)">
+              <div class="year-dropdown" id="yearDropdown"></div>
+            </div>
+            <button class="month-btn" onclick="changeMonth(1)">&#8250;</button>
+          </div>
+
+          <button class="budget-edit-btn" onclick="openBudgetModal()">Edit Budget</button>
+          <button class="add-btn" onclick="openModal()">+ Add Expense</button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <p>Total Spent</p>
+          <h2 id="totalSpent">₹0</h2>
+          <p>of ₹<span id="budgetDisplay">15,000</span> budget</p>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar" style="width: 0%;"></div>
+          </div>
+        </div>
+        <div class="card">
+          <p>Remaining</p>
+          <h2 id="remaining">₹15,000</h2>
+          <p id="remainingPercent">100% of budget left</p>
+        </div>
+        <div class="card">
+          <p>Top Category</p>
+          <h2 id="topCategory">—</h2>
+          <p id="topCategoryAmount">No expenses yet</p>
+        </div>
+        <div class="card">
+          <p>Saved So Far</p>
+          <h2>₹0</h2>
+          <p>Goal: ₹<span id="goalDisplay">—</span></p>
+        </div>
+      </div>
+
+      <div class="charts-row">
+
+        <div class="chart-card large">
+          <div class="chart-header">
+            <div>
+              <h3>Monthly Spending Overview</h3>
+              <p id="chartMonthLabel">April 2026</p>
+            </div>
+            <div class="chart-tabs">
+              <button class="tab" onclick="changeTab('weekly', this)">Weekly</button>
+              <button class="tab active-tab" onclick="changeTab('monthly', this)">Monthly</button>
+              <button class="tab" onclick="changeTab('yearly', this)">Yearly</button>
+            </div>
+          </div>
+          <div class="chart-with-axis">
+            <div class="y-axis" id="yAxis"></div>
+            <div class="bar-chart" id="barChart" style="position:relative; flex:1">
+              <div class="bar-group">
+                <div class="bar" style="height: 0px;"></div>
+                <span class="bar-label">W1</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar" style="height: 0px;"></div>
+                <span class="bar-label">W2</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar" style="height: 0px;"></div>
+                <span class="bar-label">W3</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar" style="height: 0px;"></div>
+                <span class="bar-label">W4</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar" style="height: 0px;"></div>
+                <span class="bar-label">W5</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar" style="height: 0px;"></div>
+                <span class="bar-label">W6</span>
+              </div>
+              <div class="bar-group">
+                <div class="bar" style="height: 0px;"></div>
+                <span class="bar-label">W7</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-tooltip" id="chartTooltip"></div>
+        </div>
+
+        <div class="right-col">
+          <div class="chart-card">
+            <h3>Recent Activity</h3>
+            <div class="transaction-list" id="transactionList"></div>
+            <a href="transactions.html" class="view-all">View all transactions →</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- BUDGET MODAL -->
+    <div class="modal-overlay" id="budgetModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <h3 id="budgetModalTitle">Edit Budget</h3>
+            <p>Set spending limit for this month</p>
+          </div>
+          <button class="close-btn" onclick="closeBudgetModal()">X</button>
+        </div>
+        <div class="modal-body">
+          <div class="field-group">
+            <label id="budgetModalLabel">Budget for this month (₹)</label>
+            <input type="number" id="budgetModalInput" placeholder="e.g. 15000">
+          </div>
+          <div class="field-group">
+            <label style="font-size:12px;color:#6B7280">
+              Default budget: ₹<span id="defaultBudgetDisplay">0</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-btn" onclick="resetMonthBudget()">Reset to Default</button>
+          <button class="save-btn" onclick="saveMonthBudget()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD EXPENSE MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <h3>Add New Expense</h3>
+            <p>Fill in the details below</p>
+          </div>
+          <button class="close-btn" onclick="closeModal()">X</button>
+        </div>
+        <div class="modal-body">
+          <div class="field-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="expenseAmount" placeholder="e.g. 450">
+          </div>
+          <div class="field-group">
+            <label>Category</label>
+            <select id="expenseCategory">
+              <option value="">Select a category</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Description</label>
+            <input type="text" id="expenseDescription" placeholder="e.g. Zomato order">
+          </div>
+          <div class="field-group">
+            <label>Date</label>
+            <input type="date" id="expenseDate">
+          </div>
+          <div class="field-group">
+            <label>Payment Mode</label>
+            <div class="payment-pills">
+              <button class="pill active-pill" onclick="selectPayment(this)">Cash</button>
+              <button class="pill" onclick="selectPayment(this)">UPI</button>
+              <button class="pill" onclick="selectPayment(this)">Card</button>
+              <button class="pill" onclick="selectPayment(this)">Other</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+          <button class="save-btn" id="saveExpenseBtn" onclick="saveExpense()">Save Expense</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <!-- BOTTOM NAV (mobile only) -->
+<div class="bottom-nav">
+  <a href="index.html" class="bottom-nav-item active">
+    <span class="bottom-nav-icon">🏠</span>
+    <span>Home</span>
+  </a>
+  <a href="transactions.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📋</span>
+    <span>Transactions</span>
+  </a>
+  <a href="analytics.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📊</span>
+    <span>Analytics</span>
+  </a>
+  <a href="goals.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🎯</span>
+    <span>Goals</span>
+  </a>
+  <a href="savings.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">💰</span>
+    <span>Savings</span>
+  </a>
+    <a href="settings.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">⚙</span>
+    <span>Settings</span>
+  </a>
+</div>
+  </body>
+</html>

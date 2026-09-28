@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hisaabKitaab — Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="analytics.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+
+    <style>
+      /* ---- PIE CATEGORY TOGGLES ---- */
+      #pieCategoryToggles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px 0 4px 0;
+      }
+
+      .pie-toggle-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 100px;
+        border: 1.5px solid #FFE4CC;
+        background: #FFF0E6;
+        font-size: 12px;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 700;
+        color: #1A1A2E;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .pie-toggle-btn:hover {
+        border-color: #FF8C42;
+      }
+
+      .pie-toggle-btn.toggle-hidden {
+        background: #F3F4F6;
+        border-color: #D1D5DB;
+        color: #9CA3AF;
+        text-decoration: line-through;
+      }
+
+      .pie-toggle-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .pie-toggle-btn.toggle-hidden .pie-toggle-dot {
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="sidebar">
+      <h2>hisaabKitaab</h2>
+      <p id="sidebarWelcome">Welcome</p>
+      <a href="index.html">Dashboard</a>
+      <a href="transactions.html">Transactions</a>
+      <a href="analytics.html" class="active">Analytics</a>
+      <a href="goals.html">Goals</a>
+      <a href="savings.html">Savings</a>
+      <a href="settings.html" class="settings-link">Settings</a>
+    </div>
+
+    <div class="main">
+
+      <div class="topbar">
+        <h3>Analytics</h3>
+        <div class="topbar-right">
+          <div class="chart-tabs">
+            <button class="tab active-tab" onclick="setTimeRange('month', this)">This Month</button>
+            <button class="tab" onclick="setTimeRange('3months', this)">Last 3 Months</button>
+            <button class="tab" onclick="setTimeRange('all', this)">All Time</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAT CARDS ROW -->
+      <div class="cards" style="padding: 24px 32px 0 32px;">
+        <div class="card">
+          <p>Total Spent</p>
+          <h2 id="aTotal">₹0</h2>
+          <p id="aTotalSub">in selected period</p>
+        </div>
+        <div class="card">
+          <p>Daily Average</p>
+          <h2 id="aDailyAvg">₹0</h2>
+          <p>per day</p>
+        </div>
+        <div class="card">
+          <p>Biggest Expense</p>
+          <h2 id="aBiggest">₹0</h2>
+          <p id="aBiggestDesc">—</p>
+        </div>
+        <div class="card">
+          <p>Most Spent On</p>
+          <h2 id="aTopCat">—</h2>
+          <p id="aTopCatAmount">₹0 total</p>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div class="analytics-grid">
+
+        <!-- CATEGORY CHART -->
+        <div class="chart-card large">
+          <div class="chart-header">
+            <div>
+              <h3>Spending by Category</h3>
+              <p id="catChartSub">This month</p>
+            </div>
+            <div class="chart-tabs small-tabs">
+              <button class="tab active-tab" onclick="setCatChart('pie', this)">Pie</button>
+              <button class="tab" onclick="setCatChart('bar', this)">Bar</button>
+            </div>
+          </div>
+
+          <!-- PIE CHART -->
+          <div id="pieChartContainer">
+            <!-- Category toggles — only shown in pie view -->
+            <div id="pieCategoryToggles"></div>
+            <div class="pie-wrapper">
+              <svg id="pieChart" viewBox="0 0 200 200" width="200" height="200"></svg>
+              <div class="pie-legend" id="pieLegend"></div>
+            </div>
+          </div>
+
+          <!-- BAR CHART (horizontal) -->
+          <div id="barChartContainer" style="display:none">
+            <div class="h-bar-list" id="hBarList"></div>
+          </div>
+        </div>
+
+        <!-- MONTHLY TREND -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3>Spending Trend</h3>
+              <p id="trendSub">Last 6 months</p>
+            </div>
+          </div>
+          <div class="trend-chart" id="trendChart"></div>
+          <div class="trend-labels" id="trendLabels"></div>
+        </div>
+
+      </div>
+
+      <!-- BUDGET VS ACTUAL + INSIGHTS -->
+      <div class="analytics-grid">
+
+        <!-- BUDGET VS ACTUAL -->
+        <div class="chart-card large">
+          <div class="chart-header">
+            <div>
+              <h3>Budget vs Actual</h3>
+              <p>How you're doing per category</p>
+            </div>
+          </div>
+          <div class="budget-vs-list" id="budgetVsList"></div>
+        </div>
+
+        <!-- INSIGHTS -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3>Spending Insights</h3>
+              <p>Auto-generated from your data</p>
+            </div>
+          </div>
+          <div class="insights-list" id="insightsList"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <script src="analytics.js"></script>
+
+    <!-- BOTTOM NAV (mobile only) -->
+    <div class="bottom-nav">
+      <a href="index.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="transactions.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📋</span>
+        <span>Transactions</span>
+      </a>
+      <a href="analytics.html" class="bottom-nav-item active">
+        <span class="bottom-nav-icon">📊</span>
+        <span>Analytics</span>
+      </a>
+      <a href="goals.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🎯</span>
+        <span>Goals</span>
+      </a>
+      <a href="savings.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">💰</span>
+        <span>Savings</span>
+      </a>
+      <a href="settings.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">⚙</span>
+        <span>Settings</span>
+      </a>
+    </div>
+  </body>
+</html>

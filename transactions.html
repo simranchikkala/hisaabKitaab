@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hisaabKitaab — Transactions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="transactions.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+  </head>
+  <body>
+
+    <div class="sidebar">
+      <h2>hisaabKitaab</h2>
+      <p id="sidebarWelcome">Welcome</p>
+      <a href="index.html">Dashboard</a>
+      <a href="transactions.html" class="active">Transactions</a>
+      <a href="analytics.html">Analytics</a>
+      <a href="goals.html">Goals</a>
+      <a href="savings.html">Savings</a>
+      <a href="settings.html" class="settings-link">Settings</a>
+    </div>
+
+    <div class="main">
+
+      <div class="topbar">
+        <h3>Transactions</h3>
+        <div class="topbar-right">
+          <button class="add-btn" onclick="window.location.href='index.html'">
+            + Add Expense
+          </button>
+        </div>
+      </div>
+
+      <!-- SUMMARY STRIP -->
+      <div class="summary-strip">
+        <div class="strip-item">
+          <span class="strip-label">Total this month</span>
+          <span class="strip-value" id="stripTotal">₹0</span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="strip-item">
+          <span class="strip-label">Transactions</span>
+          <span class="strip-value" id="stripCount">0</span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="strip-item">
+          <span class="strip-label">Highest expense</span>
+          <span class="strip-value" id="stripHighest">—</span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="strip-item">
+          <span class="strip-label">Most spent on</span>
+          <span class="strip-value" id="stripTopCat">—</span>
+        </div>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          placeholder="Search transactions..."
+          oninput="applyFilters()"
+        >
+
+        <div class="filter-dropdown">
+          <button class="filter-trigger" id="catTrigger" onclick="toggleMenu('catMenu', 'catTrigger')">
+            Category
+          </button>
+          <div class="filter-menu" id="catMenu"></div>
+        </div>
+
+        <div class="filter-dropdown">
+          <button class="filter-trigger" id="payTrigger" onclick="toggleMenu('payMenu', 'payTrigger')">
+            Payment
+          </button>
+          <div class="filter-menu" id="payMenu">
+            <label class="filter-menu-item">
+              <input type="checkbox" value="Cash" onchange="applyFilters()"> Cash
+            </label>
+            <label class="filter-menu-item">
+              <input type="checkbox" value="UPI" onchange="applyFilters()"> UPI
+            </label>
+            <label class="filter-menu-item">
+              <input type="checkbox" value="Card" onchange="applyFilters()"> Card
+            </label>
+            <label class="filter-menu-item">
+              <input type="checkbox" value="Other" onchange="applyFilters()"> Other
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-dropdown">
+          <button class="filter-trigger" id="monthTrigger" onclick="toggleMenu('monthMenu', 'monthTrigger')">
+            Month
+          </button>
+          <div class="filter-menu" id="monthMenu">
+            <label class="filter-menu-item"><input type="checkbox" value="2026-01" onchange="applyFilters()"> January 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-02" onchange="applyFilters()"> February 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-03" onchange="applyFilters()"> March 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-04" onchange="applyFilters()"> April 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-05" onchange="applyFilters()"> May 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-06" onchange="applyFilters()"> June 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-07" onchange="applyFilters()"> July 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-08" onchange="applyFilters()"> August 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-09" onchange="applyFilters()"> September 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-10" onchange="applyFilters()"> October 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-11" onchange="applyFilters()"> November 2026</label>
+            <label class="filter-menu-item"><input type="checkbox" value="2026-12" onchange="applyFilters()"> December 2026</label>
+          </div>
+        </div>
+
+        <div class="filter-dropdown">
+          <button class="filter-trigger" id="sortTrigger" onclick="toggleMenu('sortMenu', 'sortTrigger')">
+            Sort: Newest First
+          </button>
+          <div class="filter-menu" id="sortMenu">
+            <div class="sort-option active-sort" onclick="setSort('date-desc', this)">Newest First</div>
+            <div class="sort-option" onclick="setSort('date-asc', this)">Oldest First</div>
+            <div class="sort-option" onclick="setSort('amount-desc', this)">Amount: High to Low</div>
+            <div class="sort-option" onclick="setSort('amount-asc', this)">Amount: Low to High</div>
+          </div>
+        </div>
+
+        <button class="clear-btn" onclick="clearFilters()">Clear</button>
+        <button class="export-btn" onclick="exportCSV()">Export CSV</button>
+      </div>
+
+      <!-- ACTIVE FILTER PILLS -->
+      <div class="active-filters" id="activeFilters"></div>
+
+      <!-- TABLE -->
+      <div class="table-wrapper">
+        <table class="transaction-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Payment</th>
+              <th>Amount</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="transactionTableBody"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState">
+          <p>No transactions yet.</p>
+          <p class="empty-sub">Add your first expense from the dashboard.</p>
+        </div>
+      </div>
+
+      <!-- PAGINATION -->
+      <div class="pagination" id="pagination"></div>
+
+    </div>
+
+    <!-- EDIT TRANSACTION MODAL -->
+    <div class="modal-overlay" id="editModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <h3>Edit Transaction</h3>
+            <p>Update the details below</p>
+          </div>
+          <button class="close-btn" onclick="closeEditModal()">X</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editTransactionId">
+          <div class="field-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="editAmount" placeholder="e.g. 450">
+          </div>
+          <div class="field-group">
+            <label>Category</label>
+            <select id="editCategory"></select>
+          </div>
+          <div class="field-group">
+            <label>Description</label>
+            <input type="text" id="editDescription" placeholder="e.g. Zomato order">
+          </div>
+          <div class="field-group">
+            <label>Date</label>
+            <input type="date" id="editDate">
+          </div>
+          <div class="field-group">
+            <label>Payment Mode</label>
+            <div class="payment-pills" id="editPaymentPills">
+              <button class="pill active-pill" onclick="selectEditPayment(this)">Cash</button>
+              <button class="pill" onclick="selectEditPayment(this)">UPI</button>
+              <button class="pill" onclick="selectEditPayment(this)">Card</button>
+              <button class="pill" onclick="selectEditPayment(this)">Other</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+          <button class="save-btn" onclick="saveEditTransaction()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="transactions.js"></script>
+    <!-- BOTTOM NAV (mobile only) -->
+<div class="bottom-nav">
+  <a href="index.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🏠</span>
+    <span>Home</span>
+  </a>
+  <a href="transactions.html" class="bottom-nav-item active">
+    <span class="bottom-nav-icon">📋</span>
+    <span>Transactions</span>
+  </a>
+  <a href="analytics.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📊</span>
+    <span>Analytics</span>
+  </a>
+  <a href="goals.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🎯</span>
+    <span>Goals</span>
+  </a>
+  <a href="savings.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">💰</span>
+    <span>Savings</span>
+  </a>
+    <a href="settings.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">⚙</span>
+    <span>Settings</span>
+  </a>
+</div>
+  </body>
+</html>

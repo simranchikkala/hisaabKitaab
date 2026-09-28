@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hisaabKitaab — Savings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="savings.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+  </head>
+  <body>
+
+    <div class="sidebar">
+      <h2>hisaabKitaab</h2>
+      <p id="sidebarWelcome">Welcome</p>
+      <a href="index.html">Dashboard</a>
+      <a href="transactions.html">Transactions</a>
+      <a href="analytics.html">Analytics</a>
+      <a href="goals.html">Goals</a>
+      <a href="savings.html" class="active">Savings</a>
+      <a href="settings.html" class="settings-link">Settings</a>
+    </div>
+
+    <div class="main">
+
+      <div class="topbar">
+        <h3>Savings</h3>
+        <div class="topbar-right">
+          <div class="chart-tabs">
+            <button class="tab active-tab" onclick="setRange('month', this)">This Month</button>
+            <button class="tab" onclick="setRange('3months', this)">Last 3 Months</button>
+            <button class="tab" onclick="setRange('all', this)">All Time</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUMMARY STRIP -->
+      <div class="summary-strip">
+        <div class="strip-item">
+          <span class="strip-label">Total Saved</span>
+          <span class="strip-value" id="totalSaved">₹0</span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="strip-item">
+          <span class="strip-label">Budget Limit - All Categories</span>
+          <span class="strip-value" id="totalLimit">₹0</span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="strip-item">
+          <span class="strip-label">Total Spent</span>
+          <span class="strip-value" id="totalSpentSavings">₹0</span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="strip-item">
+          <span class="strip-label">Savings Rate</span>
+          <span class="strip-value" id="savingsRate">0%</span>
+        </div>
+      </div>
+
+      <!-- MAIN GRID -->
+      <div class="savings-grid">
+
+        <!-- LEFT: CATEGORY BREAKDOWN -->
+        <div class="savings-card large">
+          <div class="chart-header">
+            <div>
+              <h3>Savings by Category</h3>
+              <p>Budget limit minus actual spent</p>
+            </div>
+          </div>
+          <div class="savings-formula-note">
+            Formula: Category Budget — Actual Spent = Saved
+          </div>
+          <div class="cat-savings-list" id="catSavingsList"></div>
+        </div>
+
+        <!-- RIGHT: TREND + TIPS -->
+        <div class="savings-right-col">
+
+          <!-- SAVINGS TREND -->
+          <div class="savings-card">
+            <div class="chart-header">
+              <div>
+                <h3>Monthly Savings Trend</h3>
+                <p>How much you saved each month</p>
+              </div>
+            </div>
+            <div class="trend-chart" id="savingsTrend"></div>
+            <div class="trend-labels" id="savingsTrendLabels"></div>
+          </div>
+
+          <!-- TIPS -->
+          <div class="savings-card">
+            <div class="chart-header">
+              <div>
+                <h3>Ways to Save More</h3>
+                <p>Based on your spending patterns</p>
+              </div>
+            </div>
+            <div class="savings-tips" id="savingsTips"></div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <script src="savings.js"></script>
+    <!-- BOTTOM NAV (mobile only) -->
+<div class="bottom-nav">
+  <a href="index.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🏠</span>
+    <span>Home</span>
+  </a>
+  <a href="transactions.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📋</span>
+    <span>Transactions</span>
+  </a>
+  <a href="analytics.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📊</span>
+    <span>Analytics</span>
+  </a>
+  <a href="goals.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🎯</span>
+    <span>Goals</span>
+  </a>
+  <a href="savings.html" class="bottom-nav-item active">
+    <span class="bottom-nav-icon">💰</span>
+    <span>Savings</span>
+  </a>
+    <a href="settings.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">⚙</span>
+    <span>Settings</span>
+  </a>
+</div>
+  </body>
+</html>

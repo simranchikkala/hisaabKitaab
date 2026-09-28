@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>   
+    <title>hisaabKitaab — Goals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="goals.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+  </head>
+  <body>
+
+    <div class="sidebar">
+      <h2>hisaabKitaab</h2>
+      <p id="sidebarWelcome">Welcome</p>
+      <a href="index.html">Dashboard</a>
+      <a href="transactions.html">Transactions</a>
+      <a href="analytics.html">Analytics</a>
+      <a href="goals.html" class="active">Goals</a>
+      <a href="savings.html">Savings</a>
+      <a href="settings.html" class="settings-link">Settings</a>
+    </div>
+
+    <div class="main">
+
+      <div class="topbar">
+        <h3>Goals</h3>
+        <div class="topbar-right">
+          <button class="add-btn" onclick="openAddGoal()">+ New Goal</button>
+        </div>
+      </div>
+
+      <!-- SUMMARY STRIP -->
+      <div class="summary-strip">
+        <div class="strip-item">
+          <span class="strip-label">Active Goals</span>
+          <span class="strip-value" id="totalGoals">0</span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="strip-item">
+          <span class="strip-label">Total Target</span>
+          <span class="strip-value" id="totalTarget">₹0</span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="strip-item">
+          <span class="strip-label">Total Saved</span>
+          <span class="strip-value" id="totalSaved">₹0</span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="strip-item">
+          <span class="strip-label">Completed Goals</span>
+          <span class="strip-value" id="completedGoals">0</span>
+        </div>
+      </div>
+
+      <!-- GOALS GRID -->
+      <div class="goals-grid" id="goalsGrid"></div>
+
+      <!-- EMPTY STATE -->
+      <div class="goals-empty" id="goalsEmpty">
+        <p>No goals yet</p>
+        <p class="empty-sub">Click "+ New Goal" to start saving towards something</p>
+      </div>
+
+    </div>
+
+    <!-- ADD GOAL MODAL -->
+    <div class="modal-overlay" id="goalModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <h3 id="goalModalTitle">Add New Goal</h3>
+            <p>Set a target and track your progress</p>
+          </div>
+          <button class="close-btn" onclick="closeGoalModal()">X</button>
+        </div>
+        <div class="modal-body">
+          <div class="field-group">
+            <label>Goal Name</label>
+            <input type="text" id="goalName" placeholder="e.g. New Laptop, Trip to Goa">
+          </div>
+          <div class="field-group">
+            <label>Target Amount (₹)</label>
+            <input type="number" id="goalTarget" placeholder="e.g. 40000">
+          </div>
+          <div class="field-group">
+            <label>Target Date</label>
+            <input type="month" id="goalDeadline">
+          </div>
+          <div class="field-group">
+            <label>Goal Color</label>
+            <div class="color-picker" id="goalColorPicker">
+              <div class="color-dot selected-color" style="background:#FF8C42" onclick="selectGoalColor(this,'#FF8C42')"></div>
+              <div class="color-dot" style="background:#22C55E" onclick="selectGoalColor(this,'#22C55E')"></div>
+              <div class="color-dot" style="background:#3B82F6" onclick="selectGoalColor(this,'#3B82F6')"></div>
+              <div class="color-dot" style="background:#A78BFA" onclick="selectGoalColor(this,'#A78BFA')"></div>
+              <div class="color-dot" style="background:#F43F5E" onclick="selectGoalColor(this,'#F43F5E')"></div>
+              <div class="color-dot" style="background:#F59E0B" onclick="selectGoalColor(this,'#F59E0B')"></div>
+              <div class="color-dot" style="background:#06B6D4" onclick="selectGoalColor(this,'#06B6D4')"></div>
+              <div class="color-dot" style="background:#14B8A6" onclick="selectGoalColor(this,'#14B8A6')"></div>
+            </div>
+          </div>
+          <div class="savings-suggestion" id="goalSuggestion"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-btn" onclick="closeGoalModal()">Cancel</button>
+          <button class="save-btn" onclick="saveGoal()">Save Goal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD CONTRIBUTION MODAL -->
+    <div class="modal-overlay" id="contribModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <h3 id="contribTitle">Add Contribution</h3>
+            <p>How much are you adding to this goal?</p>
+          </div>
+          <button class="close-btn" onclick="closeContribModal()">X</button>
+        </div>
+        <div class="modal-body">
+          <div class="field-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="contribAmount" placeholder="e.g. 2000">
+          </div>
+          <div class="field-group">
+            <label>Date</label>
+            <input type="date" id="contribDate">
+          </div>
+          <div class="field-group">
+            <label>Note (optional)</label>
+            <input type="text" id="contribNote" placeholder="e.g. Monthly savings">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-btn" onclick="closeContribModal()">Cancel</button>
+          <button class="save-btn" onclick="saveContribution()">Add Contribution</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="goals.js"></script>
+    <!-- BOTTOM NAV (mobile only) -->
+<div class="bottom-nav">
+  <a href="index.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🏠</span>
+    <span>Home</span>
+  </a>
+  <a href="transactions.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📋</span>
+    <span>Transactions</span>
+  </a>
+  <a href="analytics.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📊</span>
+    <span>Analytics</span>
+  </a>
+  <a href="goals.html" class="bottom-nav-item active">
+    <span class="bottom-nav-icon">🎯</span>
+    <span>Goals</span>
+  </a>
+  <a href="savings.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">💰</span>
+    <span>Savings</span>
+  </a>
+    <a href="settings.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">⚙</span>
+    <span>Settings</span>
+  </a>
+</div>
+  </body>
+</html>

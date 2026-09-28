@@ -1,0 +1,275 @@
+/* ---- ANALYTICS GRID ---- */
+.analytics-grid {
+  display: flex;
+  gap: 20px;
+  padding: 20px 32px;
+}
+
+.analytics-grid .chart-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  min-width: 0;
+}
+
+.analytics-grid .chart-card.large {
+  flex: 2;
+}
+
+.analytics-grid .chart-card {
+  flex: 1;
+}
+
+/* ---- PIE CHART ---- */
+.pie-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 16px;
+}
+
+.pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A1A2E;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-pct {
+  margin-left: auto;
+  color: #6B7280;
+  font-weight: 700;
+}
+
+/* ---- HORIZONTAL BAR CHART ---- */
+.h-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.h-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.h-bar-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A1A2E;
+}
+
+.h-bar-amount {
+  color: #6B7280;
+  font-weight: 700;
+}
+
+.h-bar-bg {
+  height: 10px;
+  background: #FFE4CC;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.h-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.5s ease;
+}
+
+/* ---- TREND CHART ---- */
+.trend-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 140px;
+  margin-top: 16px;
+  border-bottom: 2px solid #F0E8E4;
+  padding-bottom: 0;
+}
+
+.trend-bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.trend-bar {
+  width: 100%;
+  max-width: 40px;
+  background: #FF8C42;
+  border-radius: 6px 6px 0 0;
+  opacity: 0.85;
+  transition: height 0.4s ease;
+  min-height: 4px;
+}
+
+.trend-bar.current {
+  background: #FF8C42;
+  opacity: 1;
+}
+
+.trend-bar.past {
+  background: #FFD4A8;
+}
+
+.trend-labels {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.trend-label {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+/* ---- BUDGET VS ACTUAL ---- */
+.budget-vs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.bva-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bva-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bva-cat {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1A1A2E;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bva-amounts {
+  font-size: 12px;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+.bva-amounts span {
+  font-weight: 800;
+  color: #1A1A2E;
+}
+
+.bva-bar-bg {
+  height: 8px;
+  background: #FFE4CC;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.bva-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.5s ease;
+}
+
+.bva-bar-fill.over {
+  background: #EF4444;
+}
+
+.bva-bar-fill.warning {
+  background: #F59E0B;
+}
+
+.bva-bar-fill.good {
+  background: #22C55E;
+}
+
+/* ---- INSIGHTS ---- */
+.insights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.insight-card {
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #FFFAF7;
+  border-left: 3px solid #FF8C42;
+}
+
+.insight-card.good {
+  border-left-color: #22C55E;
+  background: #F0FDF4;
+}
+
+.insight-card.warning {
+  border-left-color: #F59E0B;
+  background: #FFFBEB;
+}
+
+.insight-card.danger {
+  border-left-color: #EF4444;
+  background: #FEF2F2;
+}
+
+.insight-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1A1A2E;
+  margin-bottom: 4px;
+}
+
+.insight-text {
+  font-size: 12px;
+  color: #6B7280;
+  line-height: 1.5;
+}
+
+/* ---- SMALL TABS ---- */
+.small-tabs .tab {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+/* ---- EMPTY STATE ---- */
+.analytics-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: #9CA3AF;
+  font-size: 14px;
+  font-weight: 600;
+}

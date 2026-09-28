@@ -1,0 +1,485 @@
+/* ---- BASE ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+}
+
+.setup-body {
+  background: #FFF5F0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.setup-container {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 48px;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ---- WELCOME SCREEN ---- */
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.logo-mark {
+  width: 64px;
+  height: 64px;
+  background: #FF8C42;
+  border-radius: 16px;
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.welcome-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1A1A2E;
+  line-height: 1.3;
+}
+
+.welcome-sub {
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.6;
+  max-width: 380px;
+}
+
+.welcome-note {
+  font-size: 12px;
+  color: #9CA3AF;
+  margin-top: 4px;
+}
+
+/* ---- STEP INDICATOR ---- */
+/* ---- STEP INDICATOR ---- */
+.step-indicator {
+  width: 100%;
+  height: 8px;
+  background: #FFE4CC;
+  border-radius: 100px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.step-indicator-fill {
+  height: 100%;
+  background: #FF8C42;
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+
+.step-label {
+  text-align: right;
+  font-size: 12px;
+  color: #9CA3AF;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* ---- HEADINGS ---- */
+.setup-screen h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1A1A2E;
+  margin-bottom: 6px;
+}
+
+.setup-subtitle {
+  font-size: 13px;
+  color: #6B7280;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+/* ---- GOAL CARDS ---- */
+.goal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.goal-card {
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid #FFE4CC;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #FFFAF7;
+}
+
+.goal-card:hover {
+  border-color: #FF8C42;
+  background: #FFF0E6;
+}
+
+.goal-card.selected {
+  border-color: #FF8C42;
+  background: #FFF0E6;
+  box-shadow: 0 0 0 2px #FF8C42;
+}
+
+.goal-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin-bottom: 4px;
+}
+
+.goal-desc {
+  font-size: 12px;
+  color: #6B7280;
+  line-height: 1.4;
+}
+
+/* ---- FIELDS ---- */
+.setup-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.setup-field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1A1A2E;
+}
+
+.setup-field input,
+.setup-field select {
+  padding: 11px 14px;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Nunito', sans-serif;
+  color: #1A1A2E;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.setup-field input:focus,
+.setup-field select:focus {
+  border-color: #FF8C42;
+}
+
+.field-hint {
+  font-size: 12px;
+  color: #9CA3AF;
+}
+
+/* ---- TIP CARD ---- */
+.tip-card {
+  background: #FFF0E6;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 24px;
+  border-left: 3px solid #FF8C42;
+  transition: all 0.2s ease;
+}
+
+.tip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #FF8C42;
+  margin-bottom: 4px;
+}
+
+.tip-text {
+  font-size: 13px;
+  color: #1A1A2E;
+}
+
+/* ---- CATEGORY GRID ---- */
+.category-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.category-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cat-color-bar {
+  width: 4px;
+  height: 36px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.category-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A1A2E;
+  flex: 1;
+}
+
+.category-input {
+  width: 120px;
+  padding: 8px 10px;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'Nunito', sans-serif;
+  color: #1A1A2E;
+  outline: none;
+  text-align: right;
+}
+
+.category-input:focus {
+  border-color: #FF8C42;
+}
+
+/* ---- ADD CUSTOM CATEGORY ---- */
+.add-category-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 12px;
+  background: #FFFAF7;
+  border-radius: 10px;
+  border: 1.5px dashed #FFE4CC;
+}
+
+.add-category-row input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-family: 'Nunito', sans-serif;
+  color: #1A1A2E;
+  outline: none;
+}
+
+.add-category-row input::placeholder {
+  color: #9CA3AF;
+}
+
+.color-picker {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.15s;
+  border: 2px solid transparent;
+}
+
+.color-dot:hover {
+  transform: scale(1.2);
+}
+
+.color-dot.selected-color {
+  border: 2px solid #1A1A2E;
+  transform: scale(1.15);
+}
+
+.add-cat-btn {
+  padding: 6px 14px;
+  background: #FF8C42;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  font-size: 13px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.add-cat-btn:hover {
+  background: #e67a32;
+}
+
+/* ---- SAVINGS SUGGESTION ---- */
+.savings-suggestion {
+  background: #F0FDF4;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #1A1A2E;
+  font-weight: 600;
+  margin-bottom: 20px;
+  border-left: 3px solid #22C55E;
+  display: none;
+  line-height: 1.5;
+}
+
+/* ---- ALL SET SCREEN ---- */
+.allset-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.allset-icon {
+  width: 72px;
+  height: 72px;
+  background: #22C55E;
+  border-radius: 50%;
+  color: white;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+/* ---- BUTTONS ---- */
+.setup-btn {
+  width: 100%;
+  padding: 13px;
+  background: #FF8C42;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  font-size: 15px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.setup-btn:hover {
+  background: #e67a32;
+}
+
+.secondary-btn {
+  width: 100%;
+  padding: 13px;
+  background: #F3F4F6;
+  color: #6B7280;
+  border: none;
+  border-radius: 100px;
+  font-size: 15px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondary-btn:hover {
+  background: #E5E7EB;
+}
+
+.setup-nav {
+  display: flex;
+  gap: 12px;
+}
+
+.setup-nav .setup-btn {
+  flex: 1;
+}
+
+.back-btn {
+  flex: 1;
+  padding: 13px;
+  background: #F3F4F6;
+  color: #6B7280;
+  border: none;
+  border-radius: 100px;
+  font-size: 15px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: #E5E7EB;
+}
+
+.skip-link {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #9CA3AF;
+  cursor: pointer;
+}
+
+.skip-link:hover {
+  color: #FF8C42;
+}
+
+/* ---- CATEGORY TOGGLE ---- */
+.category-row {
+  opacity: 0.45;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.category-row.cat-selected {
+  opacity: 1;
+}
+
+.category-label {
+  cursor: pointer;
+}
+
+.category-label:hover {
+  color: #FF8C42;
+}
+
+
+.cat-remove-btn {
+  background: none;
+  border: none;
+  color: #D1D5DB;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.cat-remove-btn:hover {
+  color: #EF4444;
+  background: #FEF2F2;
+}
+
+/* ---- AUTH PAGES ---- */
+.auth-container {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 48px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}

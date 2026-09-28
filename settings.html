@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hisaabKitaab — Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="settings.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+  </head>
+  <body>
+
+    <div class="sidebar">
+      <h2>hisaabKitaab</h2>
+      <p id="sidebarWelcome">Welcome</p>
+      <a href="index.html">Dashboard</a>
+      <a href="transactions.html">Transactions</a>
+      <a href="analytics.html">Analytics</a>
+      <a href="goals.html">Goals</a>
+      <a href="savings.html">Savings</a>
+      <a href="settings.html" class="active settings-link">Settings</a>
+    </div>
+
+    <div class="main">
+
+      <div class="topbar">
+        <h3>Settings</h3>
+        <div class="topbar-right">
+          <button class="add-btn" onclick="saveAllSettings()">Save Changes</button>
+        </div>
+      </div>
+
+      <div class="settings-container">
+
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <h3>Profile</h3>
+            <p>Update your personal information</p>
+          </div>
+          <div class="settings-body">
+            <div class="settings-field">
+              <label>Your Name</label>
+              <input type="text" id="settingName" placeholder="e.g. Rishi">
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <h3>Budget</h3>
+            <p>Adjust your monthly income and spending limit</p>
+          </div>
+          <div class="settings-body two-col">
+            <div class="settings-field">
+              <label>Monthly Income (₹)</label>
+              <input type="number" id="settingIncome" placeholder="e.g. 15000">
+            </div>
+            <div class="settings-field">
+              <label>Monthly Spending Limit (₹)</label>
+              <input type="number" id="settingBudget" placeholder="e.g. 12000">
+            </div>
+          </div>
+          <div class="tip-card">
+            <p class="tip-title">50-30-20 Rule</p>
+            <p class="tip-text">Based on your income: <strong id="sNeeds">—</strong> on needs · <strong id="sWants">—</strong> on wants · <strong id="sSavings">—</strong> to save</p>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <h3>Categories</h3>
+            <p>Add, remove or recolor your spending categories</p>
+          </div>
+          <div class="settings-body">
+            <div class="cat-settings-list" id="catSettingsList"></div>
+            <div class="add-category-row">
+              <input type="text" id="newCatName" placeholder="Add a new category...">
+              <div class="color-picker" id="colorPicker">
+                <div class="color-dot selected-color" style="background:#FF8C42" onclick="selectColor(this,'#FF8C42')"></div>
+                <div class="color-dot" style="background:#22C55E" onclick="selectColor(this,'#22C55E')"></div>
+                <div class="color-dot" style="background:#3B82F6" onclick="selectColor(this,'#3B82F6')"></div>
+                <div class="color-dot" style="background:#A78BFA" onclick="selectColor(this,'#A78BFA')"></div>
+                <div class="color-dot" style="background:#F43F5E" onclick="selectColor(this,'#F43F5E')"></div>
+                <div class="color-dot" style="background:#F59E0B" onclick="selectColor(this,'#F59E0B')"></div>
+              </div>
+              <button class="add-cat-btn" onclick="addNewCategory()">+ Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <h3>Savings Goal</h3>
+            <p>Update your current savings target</p>
+          </div>
+          <div class="settings-body two-col">
+            <div class="settings-field">
+              <label>What are you saving for?</label>
+              <input type="text" id="settingGoalName" placeholder="e.g. New laptop">
+            </div>
+            <div class="settings-field">
+              <label>Target Amount (₹)</label>
+              <input type="number" id="settingGoalAmount" placeholder="e.g. 40000">
+            </div>
+          </div>
+          <div class="settings-body">
+            <div class="settings-field">
+              <label>Target Month</label>
+              <select id="settingGoalMonth">
+                <option value="">Select month</option>
+                <option value="May 2026">May 2026</option>
+                <option value="June 2026">June 2026</option>
+                <option value="July 2026">July 2026</option>
+                <option value="August 2026">August 2026</option>
+                <option value="September 2026">September 2026</option>
+                <option value="October 2026">October 2026</option>
+                <option value="November 2026">November 2026</option>
+                <option value="December 2026">December 2026</option>
+                <option value="January 2027">January 2027</option>
+                <option value="June 2027">June 2027</option>
+                <option value="December 2027">December 2027</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-card danger-card">
+          <div class="settings-card-header">
+            <h3>Danger Zone</h3>
+            <p>These actions cannot be undone</p>
+          </div>
+          <div class="settings-body danger-body">
+            <div class="danger-item">
+              <div>
+                <p class="danger-title">Clear all transactions</p>
+                <p class="danger-desc">Delete every expense you have logged</p>
+              </div>
+              <button class="danger-btn" onclick="clearTransactions()">Clear Transactions</button>
+            </div>
+            <div class="danger-divider"></div>
+            <div class="danger-item">
+              <div>
+                <p class="danger-title">Reset app</p>
+                <p class="danger-desc">Delete all data and start from the beginning</p>
+              </div>
+              <button class="danger-btn danger-btn-red" onclick="resetApp()">Reset Everything</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script src="settings.js"></script>
+    <div class="bottom-nav">
+  <a href="index.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🏠</span>
+    <span>Home</span>
+  </a>
+  <a href="transactions.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📋</span>
+    <span>Transactions</span>
+  </a>
+  <a href="analytics.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📊</span>
+    <span>Analytics</span>
+  </a>
+  <a href="goals.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🎯</span>
+    <span>Goals</span>
+  </a>
+  <a href="savings.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">💰</span>
+    <span>Savings</span>
+  </a>
+    <a href="settings.html" class="bottom-nav-item active">
+    <span class="bottom-nav-icon">⚙</span>
+    <span>Settings</span>
+  </a>
+</div>
+  </body>
+</html>

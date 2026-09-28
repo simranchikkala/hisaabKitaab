@@ -1,0 +1,286 @@
+/* ---- SAVINGS GRID ---- */
+.savings-grid {
+  display: flex;
+  gap: 20px;
+  padding: 24px 32px;
+  flex: 1;
+  overflow-y: auto;
+  align-items: flex-start;
+}
+
+/* ---- SAVINGS CARDS ---- */
+.savings-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  min-width: 0;
+}
+
+.savings-card.large {
+  flex: 2;
+}
+
+.savings-right-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.savings-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin-bottom: 4px;
+}
+
+.savings-card p {
+  font-size: 12px;
+  color: #6B7280;
+}
+
+/* ---- FORMULA NOTE ---- */
+.savings-formula-note {
+  background: #FFF0E6;
+  border-left: 3px solid #FF8C42;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #FF8C42;
+  margin: 12px 0 16px 0;
+}
+
+/* ---- CATEGORY SAVINGS LIST ---- */
+.cat-savings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cat-savings-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cat-savings-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cat-savings-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1A1A2E;
+}
+
+.cat-savings-amounts {
+  font-size: 13px;
+  color: #6B7280;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.saved-amount {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.saved-amount.positive {
+  color: #22C55E;
+}
+
+.saved-amount.negative {
+  color: #EF4444;
+}
+
+.cat-savings-bar-bg {
+  height: 8px;
+  background: #F3F4F6;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.cat-savings-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.5s ease;
+}
+
+.cat-savings-bar-fill.positive {
+  background: #22C55E;
+}
+
+.cat-savings-bar-fill.negative {
+  background: #EF4444;
+}
+
+/* ---- TREND CHART ---- */
+.trend-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 100px;
+  margin-top: 16px;
+  border-bottom: 2px solid #F0E8E4;
+}
+
+.trend-bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.trend-bar {
+  width: 100%;
+  max-width: 32px;
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  transition: height 0.4s ease;
+}
+
+.trend-bar.savings-positive {
+  background: #22C55E;
+}
+
+.trend-bar.savings-negative {
+  background: #EF4444;
+  opacity: 0.7;
+}
+
+.trend-labels {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.trend-label {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+/* ---- SAVINGS TIPS ---- */
+.savings-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tip-item {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  background: #FFFAF7;
+  border-radius: 10px;
+  border-left: 3px solid #FF8C42;
+}
+
+.tip-item.good {
+  border-left-color: #22C55E;
+  background: #F0FDF4;
+}
+
+.tip-item.warning {
+  border-left-color: #F59E0B;
+  background: #FFFBEB;
+}
+
+.tip-number {
+  font-size: 16px;
+  font-weight: 800;
+  color: #FF8C42;
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.tip-content p {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #1A1A2E !important;
+  margin-bottom: 2px !important;
+}
+
+.tip-content span {
+  font-size: 12px;
+  color: #6B7280;
+}
+
+/* ---- SUMMARY STRIP ---- */
+.summary-strip {
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  height: 56px;
+  background: #FFF0E6;
+  border-bottom: 1px solid #F0E8E4;
+}
+
+.strip-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 24px;
+}
+
+.strip-item:first-child { padding-left: 0; }
+
+.strip-label {
+  font-size: 13px;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+.strip-value {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1A1A2E;
+}
+
+.strip-divider {
+  width: 1px;
+  height: 24px;
+  background: #F0E8E4;
+}
+
+.strip-value.positive { color: #22C55E; }
+.strip-value.negative { color: #EF4444; }
+
+@media (max-width: 768px) {
+  .summary-strip {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 12px 16px !important;
+    height: auto !important;
+  }
+
+  .strip-item {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    padding: 8px 10px !important;
+    background: white !important;
+    border-radius: 8px !important;
+  }
+
+  .strip-divider {
+    display: none !important;
+  }
+  
+}
